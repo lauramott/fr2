@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Face Scan</title>
+        <link rel="stylesheet" href="css/c02.css"/>
+    </head>
+    <body>
+        <h1>Face Scan</h1>
+        <div id="myOnlineCamera">
+            <video id="MediaStreamVideo" width="400" height="300" style="max-width:100%;background:#111;border:1px solid #666;" autoplay></video>
+            <button id="MediaStreamStartButton">Start</button> <button id="MediaStreamStopButton">Stop</button>
+            <canvas  id="canvas"></canvas>
+            <button>Take Photo!</button>
+        </div>
+    </body>
+<script>
+(function() {
+	navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia);
+	var stream;
+	var video = document.getElementById('MediaStreamVideo');
+	document.getElementById('MediaStreamStartButton').onclick = function() {
+		if (!navigator.getUserMedia) {
+			alert('Sorry, this isn\'t happening for your browser.');
+			return;
+		}
+		navigator.getUserMedia(
+			{video: true},
+			function(localMediaStream) {
+				stream = localMediaStream;
+				if (video.mozSrcObject !== undefined) {
+					video.mozSrcObject = stream;
+				} else {
+					video.src = (window.URL || window.webkitURL).createObjectURL(stream);
+				}
+				video.play();
+			},
+			function(e) {
+				alert('getUserMedia failed: Code ' + e.code);
+			}
+		);
+	}
+	document.getElementById('MediaStreamStopButton').onclick = function() {
+		if (stream) {
+		stream.stop();
+		}
+	}
+})();
+</script>
+</html>
+
+<!--
+<video autoplay></video>
+    <style>
+        video {
+          width: 307px;
+          height: 250px;
+          background: rgba(255,255,255,0.5);
+          border: 1px solid #ccc;
+        }
+    </style>
+    <script>
+      var errorCallback = function(e) {
+        console.log('Reeeejected!', e);
+      };
+
+      // Not showing vendor prefixes.
+      navigator.getUserMedia({video: true}, function(localMediaStream) {
+        var video = document.querySelector('video');
+        video.src = window.URL.createObjectURL(localMediaStream);
+
+        // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+        // See crbug.com/110938.
+        video.onloadedmetadata = function(e) {
+          // Ready to go. Do some stuff.
+        };
+      }, errorCallback);
+    </script>
+  <video autoplay></video>
+    <img src="">
+    <canvas id="canvas" width="307" height="250"></canvas>
+    <script>
+      var video = document.querySelector('video');
+      var canvas = document.querySelector('canvas');
+      var ctx = canvas.getContext('2d');
+
+
+      function snapshot() {
+        if (localMediaStream) {
+          ctx.drawImage(video, 0, 0);
+          // "image/webp" works in Chrome.
+          // Other browsers will fall back to image/png.
+          document.querySelector('img').src = canvas.toDataURL('image/webp');
+        }
+      }
+
+      video.addEventListener('click', snapshot, false);
+
+      // Not showing vendor prefixes or code that works cross-browser.
+      navigator.getUserMedia({video: true}, function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        localMediaStream = stream;
+      }, errorCallback);
+    </script>
+    -->

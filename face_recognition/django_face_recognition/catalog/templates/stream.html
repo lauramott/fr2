@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Face Scan</title>
+        <link rel="stylesheet" href="/face_recognition/django_face_recognition/catalog/static/css/c00.css"/>
+    </head>
+    <h3>Demo: Take a Selfie With JavaScript</h3>
+    <div class="container">
+      <div class="app">
+
+        <a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
+        <video id="camera-stream"></video>
+        <img id="snap">
+
+        <p id="error-message"></p>
+
+        <div class="controls">
+          <a href="#" id="delete-photo" title="Delete Photo" class="disabled">Delete Photo</a>
+          <a href="#" id="take-photo" title="Take Photo">Take Photo</a>
+          <a href="#" id="save-photo" download="photo.jpg" title="Save Photo" class="disabled">Save File</a>
+          <a href="#" id="download-photo" download="photo.jpg" title="Save Photo" class="disabled">Download File</a>
+        </div>
+
+        <!-- Hidden canvas element. Used for taking snapshot of video. -->
+        <canvas></canvas>
+
+      </div>
+
+    </div>
+    <body>
+        <script src="/face_recognition/django_face_recognition/catalog/js/stream.js"></script>
+    </body>
+</html>
